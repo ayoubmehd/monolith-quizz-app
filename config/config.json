@@ -1,0 +1,13 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "mysecretpassword",
+    "database": "quizz_app",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": ":memory:",
+    "dialect": "sqlite"
+  }
+}

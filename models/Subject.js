@@ -17,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
 
             // Its parent
             Subject.hasOne(Subject);
+
+            Subject.hasMany(models.Question);
         }
     };
     Subject.init({

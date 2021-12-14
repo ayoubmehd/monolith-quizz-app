@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
             Question.belongsToMany(models.Answer, {
                 through: models.AnswerQuestion
             });
+
+            Question.belongsTo(models.Subject);
         }
     };
     Question.init({

@@ -25,10 +25,10 @@ module.exports = (model) => {
     /**
      * @returns {Array}
      */
-    async function findAll() {
+    async function findAll(clauses = {}) {
         try {
 
-            const data = await db.sequelize.models[model].findAll();
+            const data = await db.sequelize.models[model].findAll(clauses);
 
             return [null, data];
 

@@ -3,7 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const sqlite = require("better-sqlite3");
 const session = require("express-session");
+const SqliteStore = require("better-sqlite3-session-store")(session)
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -26,7 +28,8 @@ sequelize.authenticate()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'squirrelly');
+
 
 
 const env = process.env.NODE_ENV || "development";
@@ -34,9 +37,19 @@ const env = process.env.NODE_ENV || "development";
 // Session setup
 const cookie = env === "development" ? {} : { secure: true };
 
+const db = new sqlite("sessions.db", { verbose: console.log });
+// const { auth } = require("./middleware/auth");
+
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: process.env.APP_SECRET,
+  store: new SqliteStore({
+    client: db,
+    expired: {
+      clear: true,
+      intervalMs: 900000 //ms = 15min
+    }
+  }),
   resave: false,
   saveUninitialized: true,
   cookie
@@ -48,25 +61,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 function auth(req, res, next) {
   if (!req.session.user) {
-    res.redirect("/auth");
+    return res.redirect("/auth");
   }
   next();
 }
 
 function guest(req, res, next) {
   if (req.session.user) {
-    console.log("Dude");
-    res.redirect("/");
+    return res.redirect("/");
   }
   next();
 }
 
-app.use('/', indexRouter);
-app.use('/users', auth, usersRouter);
 app.use('/auth', guest, authRouter);
+app.use('/', auth, indexRouter);
+app.use('/users', auth, usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

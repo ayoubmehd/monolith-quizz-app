@@ -41,16 +41,20 @@ module.exports = (model) => {
     /**
      * 
      * @param {Number} id
-     * @returns {Object} 
+     * @returns {Array} 
      */
     async function findOne(id) {
         try {
 
-            const data = await db.sequelize.models[model].findByPk(id);
+            const data = await db.sequelize.models[model].findByPk(id, {
+                include: 'Role'
+            });
 
             if (!data) {
-                return [null, data];
+                return [error(404), null];
             }
+
+            return [null, data];
 
         } catch (err) {
 
@@ -131,7 +135,6 @@ module.exports = (model) => {
             return [error(500), null];
         }
     }
-
 
     return {
         findAll,

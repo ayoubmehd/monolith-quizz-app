@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="flex justify-center">
+      <main id="main" class="p-6 md:w-5/6">
+        <div class="flex justify-between">
+          <h1 class="text-2xl">Users</h1>
+          <div>
+            <button
+              id="open-popup"
+              class="bg-gray-800 text-white px-4 py-2 rounded"
+            >
+              Add new User
+            </button>
+          </div>
+        </div>
+        <div class="my-6">
+          <!-- This example requires Tailwind CSS v2.0+ -->
+          <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div
+                class="
+                  py-2
+                  align-middle
+                  inline-block
+                  min-w-full
+                  sm:px-6
+                  lg:px-8
+                "
+              >
+                <div
+                  class="
+                    shadow
+                    overflow-hidden
+                    border-b border-gray-200
+                    sm:rounded-lg
+                  "
+                >
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th
+                          scope="col"
+                          class="
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                          "
+                        >
+                          Name
+                        </th>
+                        <th
+                          scope="col"
+                          class="
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                          "
+                        >
+                          Status
+                        </th>
+                        <th
+                          scope="col"
+                          class="
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                          "
+                        >
+                          Role
+                        </th>
+                        <th scope="col" class="relative px-6 py-3">
+                          <span class="sr-only">Edit</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      {{@include("tbody")/}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+
+  <div
+    class="
+      bg-zinc-400/50
+      w-screen
+      h-screen
+      fixed
+      top-0
+      left-0
+      flex
+      justify-center
+      items-center
+    "
+    id="popup"
+  >
+    <div id="popup-inner" class="bg-white rounded-md py-6 sm:py-8 lg:py-12">
+      <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
+        <!-- form - start -->
+        <form
+          class="max-w-screen-md grid sm:grid-cols-2 gap-4 mx-auto"
+          action="/users"
+          method="post"
+        >
+          <div>
+            <label
+              for="firstName"
+              class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+              >First name*</label
+            >
+            <input
+              name="firstName"
+              class="
+                w-full
+                bg-gray-50
+                text-gray-800
+                border
+                focus:ring
+                ring-indigo-300
+                rounded
+                outline-none
+                transition
+                duration-100
+                px-3
+                py-2
+              "
+            />
+          </div>
+
+          <div>
+            <label
+              for="lastName"
+              class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+              >Last name*</label
+            >
+            <input
+              name="lastName"
+              class="
+                w-full
+                bg-gray-50
+                text-gray-800
+                border
+                focus:ring
+                ring-indigo-300
+                rounded
+                outline-none
+                transition
+                duration-100
+                px-3
+                py-2
+              "
+            />
+          </div>
+
+          <div class="">
+            <label
+              for="email"
+              class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+              >Email*</label
+            >
+            <input
+              name="email"
+              class="
+                w-full
+                bg-gray-50
+                text-gray-800
+                border
+                focus:ring
+                ring-indigo-300
+                rounded
+                outline-none
+                transition
+                duration-100
+                px-3
+                py-2
+              "
+            />
+          </div>
+
+          <div class="">
+            <label
+              for="role"
+              class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+            >
+              Role
+            </label>
+            <div class="flex justify-center">
+              <select
+                name="role"
+                class="
+                  form-select
+                  appearance-none
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-800
+                  bg-gray-50 bg-clip-padding bg-no-repeat
+                  ring-indigo-300
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                aria-label="Default select example"
+              >
+                <option disabled selected>Select a role</option>
+                {{@foreach(it.roles) => key, val}}
+                <option value="{{ val.id }}">{{ val.type }}</option>
+                {{/foreach}}
+              </select>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2 flex justify-between items-center">
+            <button
+              class="
+                inline-block
+                bg-indigo-500
+                hover:bg-indigo-600
+                active:bg-indigo-700
+                focus-visible:ring
+                ring-indigo-300
+                text-white text-sm
+                md:text-base
+                font-semibold
+                text-center
+                rounded-lg
+                outline-none
+                transition
+                duration-100
+                px-8
+                py-3
+              "
+            >
+              Send
+            </button>
+
+            <span class="text-gray-500 text-sm">*Required</span>
+          </div>
+        </form>
+        <!-- form - end -->
+      </div>
+    </div>
+  </div>
+  <script>
+    const popup = document.querySelector("#popup");
+    const openPopup = document.querySelector("#open-popup");
+    const popupInner = document.querySelector("#popup-inner");
+
+    if (popup && openPopup) {
+      popup.addEventListener("click", () => {
+        popup.classList.remove("visible");
+        popup.classList.add("invisible");
+      });
+
+      popupInner.addEventListener("click", (e) => e.stopPropagation());
+
+      popup.classList.add("invisible");
+      openPopup.addEventListener("click", (e) => {
+        e.stopPropagation();
+        popup.classList.remove("invisible");
+        popup.classList.add("visible");
+      });
+    }
+  </script>
+</html>

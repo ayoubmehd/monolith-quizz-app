@@ -12,42 +12,35 @@ router.get('/', (req, res, next) => {
 });
 router.post('/', async (req, res, next) => {
 
-    if (req.session.user) {
-        res.send("Alredy logged in");
-        res.end();
-        return;
-    }
-
     const [err, user] = await userRepository.findAll({
         where: {
             email: req.body.email
         }
     });
 
+
     if (err) {
         res.send("User Dosn't exists");
-        res.end();
         return;
     }
 
     if (user.length === 0) {
         res.send("User Dosn't exists it's me");
-        res.end();
         return;
     }
+
+    console.log(req.body, user[0].password);
 
     const isPasswordValide = await bcrypt.compare(req.body.password, user[0].password);
 
     if (!isPasswordValide) {
         res.send("User Dosn't exists");
-        res.end();
         return;
     }
 
     req.session.user = user;
 
     res.send("User logged in")
-    res.end();
 
 });
 

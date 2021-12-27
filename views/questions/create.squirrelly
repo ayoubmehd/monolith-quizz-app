@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body class="bg-gray-50">
+    <div
+      class="
+        min-h-screen
+        container
+        mx-auto
+        sm:px-4
+        flex
+        py-8
+        flex-col
+        items-center
+      "
+    >
+      <div
+        class="
+          md:w-1/2
+          bg-white
+          shadow
+          rounded-md
+          sm:py-4
+          lg:py-6
+          mb-3
+          px-8
+          flex
+          justify-between
+          items-center
+        "
+      >
+        <div>
+          Subject #{{ it.subject.id }}
+          <span>{{ it.subject.name }}</span>
+        </div>
+        <div>
+          <a href="/questions/new">
+            <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="md:w-1/2 bg-white shadow rounded-md sm:py-8 lg:py-12">
+        <div class="max-w-screen-2xl md:px-8 mx-auto">
+          <!-- form - start -->
+          <form
+            class="max-w-screen-md grid sm:grid-cols-2 gap-4 mx-auto"
+            action="/questions"
+            method="post"
+            id="new_question"
+          >
+            <input
+              type="hidden"
+              name="subject_id"
+              value="{{ it.subject.id }}"
+            />
+            <div class="sm:col-span-2">
+              <label
+                for="firstName"
+                class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+              >
+                Question Text*
+              </label>
+              <input
+                name="text"
+                class="
+                  w-full
+                  bg-gray-50
+                  text-gray-800
+                  border
+                  focus:ring
+                  ring-indigo-300
+                  rounded
+                  outline-none
+                  transition
+                  duration-100
+                  px-3
+                  py-2
+                "
+              />
+            </div>
+
+            <div class="sm:col-span-2">
+              <label
+                for="role"
+                class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+              >
+                Answers*
+              </label>
+              <div
+                id="answers_countainer"
+                class="flex justify-between flex-wrap"
+              >
+                <!-- <div class="flex w-full">
+                <input type="hidden" name="answers" value="lfdfdf" />
+                <div class="pr-3 py-2 w-3/4">
+                  <p class="px-3 py-2">lfdfdf</p>
+                </div>
+                <div class="px-3 py-2 flex items-center">
+                  <input name="is_correct" type="checkbox" />
+                </div>
+              </div>
+              <div class="flex w-full">
+                <input type="hidden" name="answers" value="lfdfdf" />
+                <div class="pr-3 py-2 w-3/4">
+                  <p class="px-3 py-2">lfdfdf</p>
+                </div>
+                <div class="px-3 py-2 flex items-center">
+                  <input name="is_correct" type="checkbox" />
+                </div>
+              </div>
+              <div class="flex w-full">
+                <input type="hidden" name="answers" value="lfdfdf" />
+                <div class="pr-3 py-2 w-3/4">
+                  <p class="px-3 py-2">lfdfdf</p>
+                </div>
+                <div class="px-3 py-2 flex items-center">
+                  <input name="is_correct" type="checkbox" />
+                </div>
+              </div> -->
+
+                <!-- Add a new answer -->
+                <div class="flex w-full">
+                  <div class="pr-3 py-2 w-3/4">
+                    <input
+                      type="text"
+                      id="answer_text"
+                      class="
+                        w-full
+                        bg-gray-50
+                        text-gray-800
+                        border
+                        focus:ring
+                        ring-indigo-300
+                        rounded
+                        outline-none
+                        transition
+                        duration-100
+                        px-3
+                        py-2
+                      "
+                    />
+                  </div>
+                  <div class="px-3 py-2 flex items-center">
+                    <input id="is_correct" type="checkbox" />
+                  </div>
+                  <div class="pl-3 py-2 flex items-center">
+                    <button
+                      type="button"
+                      id="add_answer"
+                      class="
+                        ring-indigo-300
+                        text-white text-sm
+                        border
+                        bg-indigo-500
+                        hover:bg-indigo-600
+                        active:bg-indigo-700
+                        py-1
+                        px-2
+                        rounded
+                      "
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2 flex justify-between items-center">
+              <button
+                class="
+                  inline-block
+                  bg-indigo-500
+                  hover:bg-indigo-600
+                  active:bg-indigo-700
+                  focus-visible:ring
+                  ring-indigo-300
+                  text-white text-sm
+                  md:text-base
+                  font-semibold
+                  text-center
+                  rounded-lg
+                  outline-none
+                  transition
+                  duration-100
+                  px-8
+                  py-3
+                "
+              >
+                Send
+              </button>
+
+              <span class="text-gray-500 text-sm">*Required</span>
+            </div>
+          </form>
+          <!-- form - end -->
+        </div>
+      </div>
+    </div>
+
+    <script src="/javascripts/answers.js"></script>
+  </body>
+</html>

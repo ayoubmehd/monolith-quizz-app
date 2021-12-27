@@ -11,11 +11,12 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Answer.belongsToMany(models.Question, { through: models.AnswerQuestion });
+            Answer.belongsTo(models.Question);
         }
     };
     Answer.init({
-        text: DataTypes.TEXT
+        text: DataTypes.TEXT,
+        isCorrect: DataTypes.BOOLEAN
     }, {
         sequelize,
         modelName: 'Answer',

@@ -12,9 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
             Question.hasMany(models.StudentAnswerTestQuestion);
-            Question.belongsToMany(models.Answer, {
-                through: models.AnswerQuestion
-            });
+            Question.hasMany(models.Answer);
 
             Question.belongsTo(models.Subject);
         }

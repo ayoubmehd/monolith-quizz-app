@@ -42,7 +42,9 @@ router.get('/', async function (req, res, next) {
 router.get('/:id/edit', async function (req, res, next) {
     // console.log(typeof req.params.id);
 
-    const [error, data] = await user.findOne(req.params.id);
+    const [error, data] = await user.findOne(req.params.id, {
+        include: 'Role'
+    });
 
     const [roleError, roleData] = await role.findAll();
     if (error) {

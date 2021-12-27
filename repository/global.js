@@ -43,12 +43,10 @@ module.exports = (model) => {
      * @param {Number} id
      * @returns {Array} 
      */
-    async function findOne(id) {
+    async function findOne(id, clauses = {}) {
         try {
 
-            const data = await db.sequelize.models[model].findByPk(id, {
-                include: 'Role'
-            });
+            const data = await db.sequelize.models[model].findByPk(id, clauses);
 
             if (!data) {
                 return [error(404), null];
@@ -69,10 +67,10 @@ module.exports = (model) => {
      * @param {Object} payload 
      * @returns {Object} 
      */
-    async function create(payload) {
+    async function create(payload, clauses = {}) {
         try {
 
-            const data = await db.sequelize.models[model].create(payload);
+            const data = await db.sequelize.models[model].create(payload, clauses);
 
             return [null, data];
 

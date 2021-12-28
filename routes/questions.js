@@ -6,6 +6,9 @@ var router = express.Router();
 const repo = require("../repository/global");
 const question = repo("Question");
 
+
+const diffLevel = repo("DifficultyLevel");
+
 /* GET home page. */
 router.get('/', async (req, res, next) => {
 
@@ -41,6 +44,7 @@ router.get('/', async (req, res, next) => {
 router.get('/new', async (req, res, next) => {
 
     const subject = repo("Subject");
+
     if (!req.query.subject) {
 
         const [err, data] = await subject.findAll({ where: { SubjectId: null } });
@@ -55,9 +59,13 @@ router.get('/new', async (req, res, next) => {
     }
 
     const [err, data] = await subject.findOne(req.query.subject);
+    const [errDiffLevel, diffLevels] = await diffLevel.findAll();
+
+    // console.log(diffLevels);
 
     res.render("questions/create", {
-        subject: data
+        subject: data,
+        diffLevels
     });
 
 });
@@ -77,7 +85,8 @@ router.post('/', async (req, res, next) => {
                     isCorrect: req.body.is_correct[index]
                 })
             ),
-            SubjectId: req.body.subject_id
+            SubjectId: req.body.subject_id,
+            DifficultyLevelId: req.body.diff_level,
         }, {
             include: [db.sequelize.models.Answer]
         });
@@ -133,9 +142,12 @@ router.get("/:id/edit", async (req, res, next) => {
     //     return res.send(err.message);
     // }
 
+    const [errDiffLevel, diffLevels] = await diffLevel.findAll();
+
     res.render("questions/edit", {
         data,
-        subject: currentSubject
+        subject: currentSubject,
+        diffLevels
     });
 });
 
@@ -149,13 +161,14 @@ router.post('/:id/edit', async (req, res, next) => {
 
         const [err, data] = await question.update(req.params.id, {
             question: req.body.text,
-            Answers: req.body.answers.map(
+            Answers: req.body.answers ? req.body.answers.map(
                 (val, index) => ({
                     text: val,
-                    isCorrect: Boolean(req.body.is_correct[index])
+                    isCorrect: req.body.is_correct[index]
                 })
-            ),
-            SubjectId: req.body.subject_id
+            ) : [],
+            SubjectId: req.body.subject_id,
+            DifficultyLevelId: req.body.diff_level,
         }, {
             include: [db.sequelize.models.Answer]
         });

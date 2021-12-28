@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             Question.hasMany(models.Answer);
 
             Question.belongsTo(models.Subject);
+            Question.belongsTo(models.DifficultyLevel);
         }
     };
     Question.init({

@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         attempt: DataTypes.INTEGER,
         startDate: DataTypes.DATE,
         endDate: DataTypes.DATE,
-        endDate: DataTypes.DATE,
         finalScore: DataTypes.INTEGER
     }, {
         sequelize,

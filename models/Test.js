@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Test.init({
+        label: DataTypes.STRING,
         displayCorrectAnswer: DataTypes.BOOLEAN,
         passingScore: DataTypes.INTEGER
     }, {

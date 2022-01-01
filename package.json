@@ -7,6 +7,7 @@
     "dev": "nodemon ./server.js",
     "db:seed": "npx sequelize-cli db:seed",
     "db:seed:all": "npx sequelize-cli db:seed:all",
+    "db:seed:undo:all": "npx sequelize-cli db:seed:undo:all",
     "client": "npx tailwindcss -i ./client/main.css -o ./public/stylesheets/style.css --watch",
     "test": "jest"
   },

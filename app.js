@@ -31,7 +31,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'squirrelly');
 
 
-
 const env = process.env.NODE_ENV || "development";
 
 // Session setup
@@ -60,6 +59,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// View Middlewaires
+app.use(require("./helpers/squirrelly"));
 
 function auth(req, res, next) {
   if (!req.session.user) {

@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>{{ it.title }}</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-  <body>
-    <h1>{{ it.title }}</h1>
-    <p>Welcome to {{ it.title }}</p>
-  </body>
-</html>
+{{@extends("main", it)}}
+
+{{#content}}
+<h1 class="text-2xl">content</h1>
+
+{{/extends}}

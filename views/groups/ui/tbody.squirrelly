@@ -1,0 +1,31 @@
+{{@foreach(it.data) => key, val}}
+<tr>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <div class="flex items-center">
+      <div>
+        <input
+          type="checkbox"
+          name="selected_groups"
+          id="selected-student-{{ val.id }}"
+          value="{{ val.id }}"
+        />
+      </div>
+      <div class="ml-4">
+        <div class="text-sm font-medium text-gray-900">
+          {{ val.text }}
+        </div>
+      </div>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+    <div class="flex justify-evenly">
+      <form
+        action="/tests/{{ it.test.id }}/assign/{{ val.id }}/group"
+        method="post"
+      >
+        <button class="text-indigo-600 hover:text-indigo-900">Assign To</button>
+      </form>
+    </div>
+  </td>
+</tr>
+{{/foreach}}

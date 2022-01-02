@@ -11,6 +11,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 
+const { auth, guest } = require("./middleware");
 
 require('dotenv').config();
 
@@ -62,20 +63,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // View Middlewaires
 app.use(require("./helpers/squirrelly"));
-
-function auth(req, res, next) {
-  if (!req.session.user) {
-    return res.redirect("/auth");
-  }
-  next();
-}
-
-function guest(req, res, next) {
-  if (req.session.user) {
-    return res.redirect("/");
-  }
-  next();
-}
 
 app.use('/auth', guest, authRouter);
 app.use('/', auth, indexRouter);

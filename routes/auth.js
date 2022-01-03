@@ -1,17 +1,21 @@
 const bcrypt = require('bcrypt');
 const express = require('express');
+
 const db = require('../models');
+const { guest } = require("../middleware");
+
 const router = express.Router();
 
 const repository = require("../repository/global");
+const app = require('../app');
 
 const userRepository = repository("User");
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', guest, (req, res, next) => {
     res.render('auth/login');
 });
-router.post('/', async (req, res, next) => {
+router.post('/', guest, async (req, res, next) => {
 
     const [err, user] = await userRepository.findAll({
         where: {
@@ -45,7 +49,7 @@ router.post('/', async (req, res, next) => {
 
 });
 
-router.get('/signup', (req, res, next) => {
+router.get('/signup', guest, (req, res, next) => {
     res.render('auth/signup', { title: 'Express' });
 });
 
@@ -59,7 +63,7 @@ router.post("/logout", (req, res, next) => {
     })
 });
 
-router.post('/signup', async (req, res, next) => {
+router.post('/signup', guest, async (req, res, next) => {
 
     const payload = { ...req.body };
 

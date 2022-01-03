@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>{{ it.title }}</title>
+  </head>
+  <body>
+    <header class="flex items-center bg-gray-700 shadow-lg text-white h-10">
+      <nav class="w-full px-4 flex justify-between container">
+        <div class="hover:text-purple-500">BRAND</div>
+        <ul class="flex">
+          <li class="px-2">
+            <a class="hover:text-purple-500" href="#">Link 1</a>
+          </li>
+          <li class="px-2">
+            <a class="hover:text-purple-500" href="#">Link 1</a>
+          </li>
+          <li class="px-2">
+            <a class="hover:text-purple-500" href="#">Link 1</a>
+          </li>
+          <li class="px-2">
+            <a class="hover:text-purple-500" href="#">Link 1</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container flex flex-wrap justify-center">
+      <aside
+        class="md:w-1/6 h-screen p-4 bg-gray-800 text-white shadow sticky top-0"
+      >
+        <nav>
+          <ul>
+            <li class="py-2">
+              <a class="hover:text-purple-500" href="#">Link 1</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main id="main" class="p-6 md:w-5/6">
+        {{ @block('content') }}
+        {{ /block }}
+      </main>
+      <footer class="p-4">I'm a footer</footer>
+    </div>
+    {{ @block('scripts') }}
+    {{ /block }}
+  </body>
+</html>

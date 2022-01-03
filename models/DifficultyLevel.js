@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     DifficultyLevel.init({
+        label: DataTypes.STRING,
         description: DataTypes.STRING,
         numOfPointsMin: DataTypes.INTEGER.UNSIGNED,
         numOfPointsMax: DataTypes.INTEGER.UNSIGNED

@@ -1,0 +1,233 @@
+{{@extends("main", it)}}
+
+{{#content}}
+<div
+  class="min-h-screen container mx-auto sm:px-4 flex py-8 flex-col items-center"
+>
+  <div
+    class="
+      md:w-1/2
+      bg-white
+      shadow
+      rounded-md
+      sm:py-4
+      lg:py-6
+      mb-3
+      px-8
+      flex
+      justify-between
+      items-center
+    "
+  >
+    <div>
+      {{@if(it.data.Subject)}}
+      Subject #{{ it.data.Subject.id }}
+      <span>{{ it.data.Subject.name }}</span>
+      {{#else}}
+      Subject #{{ it.subject ? it.subject.id : "" }}
+      <span>{{ it.subject ? it.subject.name : "" }}</span>
+      {{/if}}
+    </div>
+    <div>
+      <a href="/questions/{{ it.data.id }}/edit">
+        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div
+    id="popup-inner"
+    class="md:w-1/2 bg-white shadow rounded-md sm:py-8 lg:py-12 my-auto"
+  >
+    <div class="max-w-screen-2xl md:px-8 mx-auto">
+      <!-- form - start -->
+      <form
+        class="max-w-screen-md grid sm:grid-cols-2 gap-4 mx-auto"
+        action="/questions/{{ it.data.id }}/edit"
+        method="post"
+        id="new_question"
+      >
+        <input type="hidden" name="subject_id"
+        {{@if(it.data.Subject)}}
+        value="{{ it.data.Subject.id }}"
+        {{#else}}
+        value="{{ it.subject ? it.subject.id : "" }}"
+        {{/if}}
+        />
+        <div class="sm:col-span-2">
+          <label
+            for="firstName"
+            class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+          >
+            Question Text*
+          </label>
+          <input
+            name="text"
+            class="
+              w-full
+              bg-gray-50
+              text-gray-800
+              border
+              focus:ring
+              ring-indigo-300
+              rounded
+              outline-none
+              transition
+              duration-100
+              px-3
+              py-2
+            "
+            value="{{ it.data.question }}"
+          />
+        </div>
+
+        <div class="sm:col-span-2">
+          <label
+            for="firstName"
+            class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+          >
+            Difficulty*
+          </label>
+          <select
+            class="
+              form-select
+              appearance-none
+              block
+              w-full
+              px-3
+              py-1.5
+              text-base
+              font-normal
+              text-gray-700
+              bg-white bg-clip-padding bg-no-repeat
+              border border-solid border-gray-300
+              rounded
+              transition
+              ease-in-out
+              m-0
+              focus:text-gray-700
+              focus:bg-white
+              focus:border-blue-600
+              focus:outline-none
+            "
+            aria-label="Choise a Difficulty Level"
+            name="diff_level"
+          >
+            <option selected>Choise a Difficulty Level</option>
+            {{@foreach(it.diffLevels) => key, val}}
+            <option value="{{ val.id }}" aria-label="{{ val.label }}">
+              {{ val.label }}
+            </option>
+            {{/foreach}}
+          </select>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label
+            for="role"
+            class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+          >
+            Answers*
+          </label>
+          <div id="answers_countainer" class="flex justify-between flex-wrap">
+            <!-- Add a new answer -->
+            <div class="flex w-full">
+              <div class="pr-3 py-2 w-3/4">
+                <input
+                  type="text"
+                  id="answer_text"
+                  class="
+                    w-full
+                    bg-gray-50
+                    text-gray-800
+                    border
+                    focus:ring
+                    ring-indigo-300
+                    rounded
+                    outline-none
+                    transition
+                    duration-100
+                    px-3
+                    py-2
+                  "
+                />
+              </div>
+              <div class="px-3 py-2 flex items-center">
+                <input id="is_correct" type="checkbox" />
+              </div>
+              <div class="pl-3 py-2 flex items-center">
+                <button
+                  type="button"
+                  id="add_answer"
+                  class="
+                    ring-indigo-300
+                    text-white text-sm
+                    border
+                    bg-indigo-500
+                    hover:bg-indigo-600
+                    active:bg-indigo-700
+                    py-1
+                    px-2
+                    rounded
+                  "
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+            {{@foreach(it.data.Answers) => key, val}}
+            <div class="flex w-full">
+              <input type="hidden" name="answers" value="{{ val.text }}" />
+              <div class="pr-3 py-2 w-3/4">
+                <p class="px-3 py-2">{{ val.text }}</p>
+              </div>
+              <div class="px-3 py-2 flex items-center">
+                <input name="is_correct" type="checkbox"
+                {{ val.isCorrect ? "checked" : "" }} />
+              </div>
+            </div>
+            {{/foreach}}
+          </div>
+        </div>
+
+        <div class="sm:col-span-2 flex justify-between items-center">
+          <button
+            class="
+              inline-block
+              bg-indigo-500
+              hover:bg-indigo-600
+              active:bg-indigo-700
+              focus-visible:ring
+              ring-indigo-300
+              text-white text-sm
+              md:text-base
+              font-semibold
+              text-center
+              rounded-lg
+              outline-none
+              transition
+              duration-100
+              px-8
+              py-3
+            "
+          >
+            Send
+          </button>
+
+          <span class="text-gray-500 text-sm">*Required</span>
+        </div>
+      </form>
+      <!-- form - end -->
+    </div>
+  </div>
+</div>
+
+{{#scripts}}
+<script src="/javascripts/answers.js"></script>
+
+{{/extends}}

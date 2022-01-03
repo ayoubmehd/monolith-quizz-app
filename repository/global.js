@@ -25,10 +25,10 @@ module.exports = (model) => {
     /**
      * @returns {Array}
      */
-    async function findAll() {
+    async function findAll(clauses = {}) {
         try {
 
-            const data = await db.sequelize.models[model].findAll();
+            const data = await db.sequelize.models[model].findAll(clauses);
 
             return [null, data];
 
@@ -41,16 +41,18 @@ module.exports = (model) => {
     /**
      * 
      * @param {Number} id
-     * @returns {Object} 
+     * @returns {Array} 
      */
-    async function findOne(id) {
+    async function findOne(id, clauses = {}) {
         try {
 
-            const data = await db.sequelize.models[model].findByPk(id);
+            const data = await db.sequelize.models[model].findByPk(id, clauses);
 
             if (!data) {
-                return [null, data];
+                return [error(404), null];
             }
+
+            return [null, data];
 
         } catch (err) {
 
@@ -65,10 +67,10 @@ module.exports = (model) => {
      * @param {Object} payload 
      * @returns {Object} 
      */
-    async function create(payload) {
+    async function create(payload, clauses = {}) {
         try {
 
-            const data = await db.sequelize.models[model].create(payload);
+            const data = await db.sequelize.models[model].create(payload, clauses);
 
             return [null, data];
 
@@ -131,7 +133,6 @@ module.exports = (model) => {
             return [error(500), null];
         }
     }
-
 
     return {
         findAll,

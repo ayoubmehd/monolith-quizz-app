@@ -1,0 +1,220 @@
+{{@extends("main", it)}}
+
+{{#content}}
+<div class="flex justify-between">
+  <h1 class="text-2xl">User #{{ it.data.id }}</h1>
+  <div></div>
+</div>
+<div class="my-6">
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <div class="flex flex-col">
+    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div
+        class="
+          py-2
+          align-middle
+          inline-block
+          min-w-full
+          sm:px-6
+          lg:px-8
+        "
+      >
+        <div
+          class="
+            shadow
+            overflow-hidden
+            border-b border-gray-200
+            sm:rounded-lg
+            py-14
+          "
+        >
+          <!-- form - start -->
+          <form
+            class="max-w-screen-md grid sm:grid-cols-2 gap-4 mx-auto"
+            action="/users/{{it.data.id}}/edit"
+            method="post"
+          >
+            <div>
+              <label
+                for="firstName"
+                class="
+                  inline-block
+                  text-gray-800 text-sm
+                  sm:text-base
+                  mb-2
+                "
+              >
+                First name*
+              </label>
+              <input
+                name="firstName"
+                class="
+                  w-full
+                  bg-gray-50
+                  text-gray-800
+                  border
+                  focus:ring
+                  ring-indigo-300
+                  rounded
+                  outline-none
+                  transition
+                  duration-100
+                  px-3
+                  py-2
+                "
+                value="{{ it.data.firstName }}"
+              />
+            </div>
+
+            <div>
+              <label
+                for="lastName"
+                class="
+                  inline-block
+                  text-gray-800 text-sm
+                  sm:text-base
+                  mb-2
+                "
+                >Last name*</label
+              >
+              <input
+                name="lastName"
+                class="
+                  w-full
+                  bg-gray-50
+                  text-gray-800
+                  border
+                  focus:ring
+                  ring-indigo-300
+                  rounded
+                  outline-none
+                  transition
+                  duration-100
+                  px-3
+                  py-2
+                "
+                value="{{ it.data.lastName }}"
+              />
+            </div>
+
+            <div class="">
+              <label
+                for="email"
+                class="
+                  inline-block
+                  text-gray-800 text-sm
+                  sm:text-base
+                  mb-2
+                "
+                >Email*</label
+              >
+              <input
+                name="email"
+                class="
+                  w-full
+                  bg-gray-50
+                  text-gray-800
+                  border
+                  focus:ring
+                  ring-indigo-300
+                  rounded
+                  outline-none
+                  transition
+                  duration-100
+                  px-3
+                  py-2
+                "
+                value="{{ it.data.email }}"
+              />
+            </div>
+
+            <div class="">
+              <label
+                for="role"
+                class="
+                  inline-block
+                  text-gray-800 text-sm
+                  sm:text-base
+                  mb-2
+                "
+              >
+                Role
+              </label>
+              <div class="flex justify-center">
+                <select
+                  name="role"
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    w-full
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-800
+                    bg-gray-50 bg-clip-padding bg-no-repeat
+                    ring-indigo-300
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                  aria-label="Default select example"
+                >
+                  <option disabled selected>Select a role</option>
+                  {{@foreach(it.roles) => key, val}}
+                  <option
+                    {{ it.data.Role ? val.id === it.data.Role.id ? 'selected': '':'' }}
+                    value="{{ val.id }}"
+                  >
+                    {{ val.type }}
+                  </option>
+                  {{/foreach}}
+                </select>
+              </div>
+            </div>
+
+            <div
+              class="sm:col-span-2 flex justify-between items-center"
+            >
+              <button
+                class="
+                  inline-block
+                  bg-indigo-500
+                  hover:bg-indigo-600
+                  active:bg-indigo-700
+                  focus-visible:ring
+                  ring-indigo-300
+                  text-white text-sm
+                  md:text-base
+                  font-semibold
+                  text-center
+                  rounded-lg
+                  outline-none
+                  transition
+                  duration-100
+                  px-8
+                  py-3
+                "
+              >
+                Send
+              </button>
+
+              <span class="text-gray-500 text-sm">*Required</span>
+            </div>
+          </form>
+          <!-- form - end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/extends}}
+
+

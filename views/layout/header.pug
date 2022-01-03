@@ -1,0 +1,29 @@
+var items = [
+
+];
+
+header.flex.items-center.bg-gray-700.shadow-lg.text-white.h-10
+  nav.w-full.px-4.flex.justify-between
+    .hover:text-purple-500 BRAND
+    ul.flex.justify-between
+      each item in items
+        li= item 
+      
+
+//-
+  <header class="flex items-center bg-gray-700 shadow-lg text-white h-10">
+    <nav class="w-full px-4 flex justify-between">
+      <div class="hover:text-purple-500">BRAND</div>
+      <ul class="">
+        <li class="px-2">
+          <%- include("../ui/link", {href:"", text: "Lorem"}) %>
+        </li>
+        <li class="px-2">
+          <%- include("../ui/link", {href:"", text: "Lorem"}) %>
+        </li>
+        <li class="px-2">
+          <%- include("../ui/link", {href:"", text: "Lorem"}) %>
+        </li>
+      </ul>
+    </nav>
+  </header>

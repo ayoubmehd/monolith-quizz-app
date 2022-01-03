@@ -6,11 +6,11 @@ var router = express.Router();
 const repo = require("../repository/global");
 const question = repo("Question");
 
-const { former } = require("../middleware");
+const { allow } = require("../middleware");
 
 const diffLevel = repo("DifficultyLevel");
 
-router.use(former);
+router.use(allow('former', 'admin'));
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {

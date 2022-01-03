@@ -3,15 +3,16 @@ const express = require('express');
 const router = express.Router();
 
 
-const { admin } = require("../middleware");
+const { allow } = require("../middleware");
+
 const repository = require("../repository/global");
 const path = require("path");
 
 const user = repository("User");
 const role = repository("Role");
 
+router.use(allow('admin'));
 
-router.use(admin);
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
     const [error, data] = await user.findAll({

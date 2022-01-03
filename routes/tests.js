@@ -9,12 +9,12 @@ const subject = repo("Subject");
 const student = repo("User");
 const group = repo("Group");
 
-const { former } = require("../middleware");
+const { allow } = require("../middleware");
 
 const defTemplate = require("../helpers/defTemplate");
 
 
-router.use(former);
+router.use(allow('former', 'admin'));
 
 /**
  * Pages: GET Request only

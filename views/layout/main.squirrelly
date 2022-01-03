@@ -13,16 +13,9 @@
         <div class="hover:text-purple-500">BRAND</div>
         <ul class="flex">
           <li class="px-2">
-            <a class="hover:text-purple-500" href="#">Link 1</a>
-          </li>
-          <li class="px-2">
-            <a class="hover:text-purple-500" href="#">Link 1</a>
-          </li>
-          <li class="px-2">
-            <a class="hover:text-purple-500" href="#">Link 1</a>
-          </li>
-          <li class="px-2">
-            <a class="hover:text-purple-500" href="#">Link 1</a>
+            <form action="/auth/logout" method="post">
+              <button class="hover:text-purple-500">Logout</button>
+            </form>
           </li>
         </ul>
       </nav>
@@ -35,8 +28,19 @@
         <nav>
           <ul>
             <li class="py-2">
-              <a class="hover:text-purple-500" href="#">Link 1</a>
+              <a class="hover:text-purple-500" href="/">Home</a>
             </li>
+            <li class="py-2">
+              <a class="hover:text-purple-500" href="/tests">Tests</a>
+            </li>
+            <li class="py-2">
+              <a class="hover:text-purple-500" href="/questions">Questions</a>
+            </li>
+            {{@if(it.isAdmin())}}
+            <li class="py-2">
+              <a class="hover:text-purple-500" href="/users">Users</a>
+            </li>
+            {{/if}}
           </ul>
         </nav>
       </aside>

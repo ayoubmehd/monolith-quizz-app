@@ -11,7 +11,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 
-const { auth, guest } = require("./middleware");
+const { auth, authHelper } = require("./middleware");
 
 require('dotenv').config();
 
@@ -63,8 +63,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // View Middlewaires
 app.use(require("./helpers/squirrelly"));
+app.use(authHelper);
 
-app.use('/auth', guest, authRouter);
+app.use('/auth', authRouter);
 app.use('/', auth, indexRouter);
 app.use('/users', auth, usersRouter);
 app.use('/questions', auth, require("./routes/questions"));

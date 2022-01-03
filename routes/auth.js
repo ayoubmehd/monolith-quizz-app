@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const express = require('express');
+const db = require('../models');
 const router = express.Router();
 
 const repository = require("../repository/global");
@@ -15,9 +16,9 @@ router.post('/', async (req, res, next) => {
     const [err, user] = await userRepository.findAll({
         where: {
             email: req.body.email
-        }
+        },
+        include: db.sequelize.models.Role
     });
-
 
     if (err) {
         res.send("User Dosn't exists");
@@ -38,14 +39,24 @@ router.post('/', async (req, res, next) => {
         return;
     }
 
-    req.session.user = user;
+    req.session.user = user[0];
 
-    res.send("User logged in")
+    res.redirect("/");
 
 });
 
 router.get('/signup', (req, res, next) => {
     res.render('auth/signup', { title: 'Express' });
+});
+
+router.post("/logout", (req, res, next) => {
+    req.session.destroy(err => {
+        if (err) {
+            res.redirect("/");
+        }
+
+        res.redirect("/login");
+    })
 });
 
 router.post('/signup', async (req, res, next) => {
